@@ -11,10 +11,14 @@ public class Meow {
     }};
 
     public static String meow(String boringHumanDroolSpeak) {
+        String addSuffix = "";
+        if (boringHumanDroolSpeak.endsWith("ing")) {
+            addSuffix = "ing";
+        }
         for (Map.Entry<String, String> paw : PAWTERNS.entrySet()) {
             String meow = boringHumanDroolSpeak.replaceAll(paw.getKey(), paw.getValue());
             if (!meow.equals(boringHumanDroolSpeak)) {
-                return meow;
+                return meow + addSuffix;
             }
         }
 

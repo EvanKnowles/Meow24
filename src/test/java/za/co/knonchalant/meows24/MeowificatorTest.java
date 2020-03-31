@@ -19,5 +19,6 @@ public static final String TEMP_HTML ="/Users/evan/Library/Preferences/IntelliJI
         Assert.assertEquals("Meow", Meow.meow("Jim"));
         Assert.assertEquals("21-meow", Meow.meow("21-day"));
         Assert.assertEquals("MEOW", Meow.meow("SA"));
+        Assert.assertEquals("Meowing", Meow.meow("Breaking"));
     }
 }
