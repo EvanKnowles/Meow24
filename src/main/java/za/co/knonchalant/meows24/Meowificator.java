@@ -7,12 +7,22 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 
 public class Meowificator {
 
     public static String get() throws IOException {
         Document document = Jsoup.connect("https://www.news24.com")
                 .get();
+
+        byte[] bytes = Files.readAllBytes(Paths.get("/Users/evan/dev/GitHub/Meows24/src/main/resources/Meows24.png"));
+        String logoPngBase64 = Base64.getEncoder().encodeToString(bytes);
+        String backgroundAttribute = "background: none;";
+        Elements logo = document.select("#news24HeaderLogo");
+
+        logo.attr("style", String.format(backgroundAttribute, logoPngBase64));
 
         document.select("#divToHide").remove();
         document.select("script").remove();
@@ -26,6 +36,7 @@ public class Meowificator {
         }
 
 
+        meow(document, "span");
         meow(document, "p");
         meow(document, "a");
 
@@ -34,7 +45,14 @@ public class Meowificator {
         meow(document, "h3");
         meow(document, "h4");
         meow(document, "h5");
+        meow(document, ".absolute.update_time");
 
+        logo.select("a").html("<img src='data:image/png;base64," + logoPngBase64 + "' style='    position: absolute;\n" +
+                "    top: 0;\n" +
+                "    left: 0;\n" +
+                "    width: 208px;\n" +
+                "    height: 75px;'/>");
+        logo.attr("id", "naah");
 
         return document.html();
     }
